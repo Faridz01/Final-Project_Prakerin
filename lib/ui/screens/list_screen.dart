@@ -9,14 +9,15 @@ class ListScreen extends StatelessWidget {
       // ),
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.blueGrey, Colors.lightBlueAccent])),
+          // decoration: BoxDecoration(
+          //     gradient: LinearGradient(
+          //         colors: [Colors.blueGrey, Colors.lightBlueAccent])),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text("List Wisata"),
+                Text("List Movie"),
+
               ]),
             ],
           ),

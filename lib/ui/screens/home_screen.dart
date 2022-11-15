@@ -1,5 +1,11 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ridzfltr/ui/network/api.dart';
+import 'package:ridzfltr/ui/screens/login_screen.dart';
 import 'package:ridzfltr/ui/services/album_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/album_model.dart';
 
@@ -9,39 +15,54 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Album> listAlbum = [];
-  AlbumService albumService = AlbumService();
-
-  getData() async {
-    listAlbum = await albumService.getData();
-    setState(() {});
-  }
+  String name = '';
 
   void initState() {
     super.initState();
-    getData();
+    loadUser();
+  }
+
+  loadUser() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var user = jsonDecode(localStorage.getString('user') ?? '');
+
+    if (user != null) {
+      setState(() {
+        name = user['name'];
+      });
+    }
+  }
+
+  void logout() async {
+    var res = await Network().getData('/logout');
+    var body = json.decode(res.body);
+    if (body['success']) {
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.remove('user');
+      localStorage.remove('token');
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.blueGrey, Colors.lightBlueAccent])),
-          child: ListView.separated(
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Text(listAlbum[index].title),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return Divider();
-              },
-              itemCount: listAlbum.length),
-        ),
+      appBar: AppBar(
+        title: const Text('Detail Movie'),
+        actions: [
+          IconButton(onPressed: () => logout(), icon: const Icon(Icons.logout)),
+        ],
       ),
+      body: SafeArea(
+          child: Center(
+        child: Text('Welcome to Detail Movie, ${name}'),
+      )),
     );
   }
 }

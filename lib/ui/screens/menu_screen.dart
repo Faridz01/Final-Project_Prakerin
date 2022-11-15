@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:ridzfltr/ui/screens/home_screen.dart';
 import 'package:ridzfltr/ui/screens/list_screen.dart';
@@ -35,12 +34,12 @@ class _MenuScreenState extends State<MenuScreen> {
         unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.details),
+            label: 'Detail Movie',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.assignment),
-            label: 'Daftar Wisata',
+            label: 'List Movie',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

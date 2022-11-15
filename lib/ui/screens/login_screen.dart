@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
       var data = {'email': email, 'password': password};
       var res = await Network().auth(data, '/login');
       var body = json.decode(res.body);
-      _formKey.currentState!.save();
+      _formKey.currentState!.save();  
 
       if (body['success']) {
         SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -166,15 +166,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     margin: EdgeInsets.all(16),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                            colors: [Colors.white, Colors.white])),
+                        gradient:
+                            LinearGradient(colors: [Colors.blue, Colors.blue])),
                     child: Center(
                       child: Text(
                         "Login",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                     ),
